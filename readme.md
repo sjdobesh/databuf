@@ -30,40 +30,41 @@ struct data{
 ### **functions**
 Most functions are implemented with generic macros and accept multiple types.
 `name` can by either an int for the ID or a char ptr for the name.
-`value` can be an int, float, double, char, or any corresponding ptr types. Note that in order to 
-force the compiler to recognize constants, you may need to cast and explicitly show type (eg. `(char)'a'`).
+`value` can be an int, float, double, char, or any corresponding ptr types. 
 `prim_ptr` can be any type of primative ptr, or a ptr to a ptr.
+Note that in order to 
+force the compiler to recognize constants, you may need to cast and explicitly show type (eg. `(char)'a'`).
 
 #### _creating and freeing a databuf_
+Returns an empty databuf, with a null ptr and n = 0.
 ```c
 databuf create_databuf();
 ```
-returns an empty databuf, with a null ptr and n = 0.
+Frees whatever remains in an allocated databuf.
 ```c
 void free_databuf(databuf*)
 ```
-frees whatever remains in an allocated databuf.
 
 #### _creating a new variable_
-This function returns the ID of the newly created data struct.
+Returns the ID of the newly created data struct.
 ```c
 int new_var(databuf*, name, value);
 ```
 
 #### _setting an exisiting variable_
-This function returns an exit code, 0 if it found the variable and set the ptr, 1 if it did not.
+Returns an exit code, 0 if it found the variable and set the ptr, 1 if it did not.
 ```c
 int set_var(databuf*, name, value);
 ```
 
 #### _getting a variable_
-This function returns an exit code, 0 if it found the variable and set the ptr, 1 if it did not.
+Returns an exit code, 0 if it found the variable and set the ptr, 1 if it did not.
 ```c
 int get_var(databuf*, name, prim_ptr)
 ```
 
 #### _freeing variables_
-This function returns an exit code, 0 if it found and removed the variable, 1 if it did not.
+Returns an exit code, 0 if it found and removed the variable, 1 if it did not.
 ```c
 free_var(databuf*, name);
 ```

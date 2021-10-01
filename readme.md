@@ -83,17 +83,28 @@ Print verbose, includes all information of each data struct in the buffer
 printv_databuf(buf);  
 ```
 
-### **example usage**
+### **usage**
+Basic use cases. Making variables, setting, getting, and deleting them.
 ```c
-databuf buf = create_databuf();
-new_var(&buf, "x", 1);
-set_var(&buf, "x", 2);
-new_var(&buf, "y", 3.14f);
-new_var(&buf, "z", (char)'a');
-new_var(&buf, "w", "hi");
-int x;
-get_var(buf, "x", &x);
-free_var(&buf, "x");
-print_databuf(buf);
-free_databuf(&buf);
+databuf buf = create_databuf(); // make a buffer
+new_var(&buf, "x", 1);          // make a new variable
+set_var(&buf, "x", 2);          // set existing variable
+int x; 
+get_var(buf, "x", &x);          // get a value into a local variable
+print_var(buf, "x");            // prints associated value
+free_var(&buf, "x");            // free variable from the buffer
+[or]
+free_databuf(&buf);             // frees the entire databuffer
+```
+#### **type generic arguments**
+```c
+new_var(&buf, "x", 1);         // int
+new_var(&buf, "y", 3.14f);     // float
+new_var(&buf, "z", 6.28);      // double
+new_var(&buf, "w", (char)'a'); // char
+new_var(&buf, "s", "hi");      // char*
+new_var(&buf, "p", (int*)&x);  // int*
+int id = new_var(&buf, "a", 1);
+int a;
+get_var(buf, id, &a); // we can search by name or by unique id
 ```

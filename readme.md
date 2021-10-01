@@ -60,7 +60,7 @@ int set_var(databuf*, name, value);
 #### _getting a variable_
 Returns an exit code, 0 if it found the variable and set the ptr, 1 if it did not.
 ```c
-int get_var(databuf*, name, prim_ptr)
+int get_var(databuf, name, prim_ptr)
 ```
 
 #### _freeing variables_
@@ -91,6 +91,8 @@ set_var(&buf, "x", 2);
 new_var(&buf, "y", 3.14f);
 new_var(&buf, "z", (char)'a');
 new_var(&buf, "w", "hi");
+int x;
+get_var(buf, "x", &x);
 free_var(&buf, "x");
 print_databuf(buf);
 free_databuf(&buf);

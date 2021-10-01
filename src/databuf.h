@@ -34,6 +34,8 @@ typedef struct databuf {
 } databuf;
 
 int get_next_id(databuf*);
+int get_first_id(databuf);
+int get_last_id(databuf);
 
 void print_type(int type);
 void print_databuf(databuf db);
@@ -44,6 +46,7 @@ void print_var_name(databuf db, char*);
 int: print_var_id, char*: print_var_name)(databuf, id)
 
 databuf create_databuf();
+void free_databuf(databuf*);
 
 // ADD TO BUFFER
 int add_data(databuf*, data);

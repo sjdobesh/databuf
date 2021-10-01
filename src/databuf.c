@@ -122,6 +122,13 @@ databuf create_databuf() {
   return db;
 }
 
+void free_databuf(databuf* buf) {
+  for (int i = 0; i < buf->n; i++) {
+    free(buf->d[i].ptr);
+  }
+  free(buf->d);
+}
+
 // wrap data implementations
 // INT
 data wrap_int(int* x, char* name){
@@ -379,6 +386,19 @@ int get_chrp_name(databuf buf, char* name, char** var) {
     return 0;
   }
   return 1;
+}
+
+int get_first_id(databuf buf) {
+  if (buf.n > 0) {
+    return buf.d[0].id;
+  }
+  return -1;
+}
+int get_last(databuf buf) {
+  if (buf.n > 0) {
+    return buf.d[buf.n-1].id;
+  }
+  return -1;
 }
 
 

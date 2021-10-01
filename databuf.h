@@ -34,6 +34,8 @@ typedef struct databuf {
 } databuf;
 
 int get_next_id(databuf*);
+int get_first_id(databuf);
+int get_last_id(databuf);
 
 void print_type(int type);
 void print_databuf(databuf db);
@@ -44,6 +46,7 @@ void print_var_name(databuf db, char*);
 int: print_var_id, char*: print_var_name)(databuf, id)
 
 databuf create_databuf();
+void free_databuf(databuf*);
 
 // ADD TO BUFFER
 int add_data(databuf*, data);
@@ -163,7 +166,6 @@ int free_var_name(databuf*, char*);
 #define free_var(databuf, id) _Generic ((id), \
 int: free_var_id, char*: free_var_name)(databuf, id)
 
-#endif
 
 #include <stdlib.h>
 #include <string.h>
@@ -286,6 +288,13 @@ void printv_databuf(databuf db) {
 databuf create_databuf() {
   databuf db = {NULL, 0};
   return db;
+}
+
+void free_databuf(databuf* buf) {
+  for (int i = 0; i < buf->n; i++) {
+    free(buf->d[i].ptr);
+  }
+  free(buf->d);
 }
 
 // wrap data implementations
@@ -547,6 +556,19 @@ int get_chrp_name(databuf buf, char* name, char** var) {
   return 1;
 }
 
+int get_first_id(databuf buf) {
+  if (buf.n > 0) {
+    return buf.d[0].id;
+  }
+  return -1;
+}
+int get_last(databuf buf) {
+  if (buf.n > 0) {
+    return buf.d[buf.n-1].id;
+  }
+  return -1;
+}
+
 
 // SETTING
 // set ints
@@ -688,6 +710,7 @@ int free_var_id(databuf* buf, int id) {
   for (int i = 0; i < buf->n; i++) {
     if (buf->d[i].id == id) {
       found = 1;
+      free(buf->d[i].ptr);
     }
     if (found && i < buf->n-1) {
       buf->d[i] = buf->d[i+1];
@@ -706,6 +729,7 @@ int free_var_name(databuf* buf, char* name) {
   for (int i = 0; i < buf->n; i++) {
     if (!strcmp(buf->d[i].name, name)) {
       found = 1;
+      free(buf->d[i].ptr);
     }
     if (found && i < buf->n-1) {
       buf->d[i] = buf->d[i+1];
@@ -718,3 +742,4 @@ int free_var_name(databuf* buf, char* name) {
   }
   return 1;
 }
+#endif

@@ -1,5 +1,5 @@
 # **Databuf**
-Header only library implementing a dynamic data buffer.
+Header only library implementing a dynamic data buffer in C.
 
 ### **quick start**
 Place `databuf.h` in your project folder or include folder.

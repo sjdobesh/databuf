@@ -6,15 +6,15 @@
 // ENUMS //---------------------------------------------------------------------
 
 enum db_type {
-  INT  = (1u << 0),
-  FLT  = (1u << 1),
-  DBL  = (1u << 2),
-  CHR  = (1u << 3),
-  INTP = (1u << 4),
-  FLTP = (1u << 5),
-  DBLP = (1u << 6),
-  CHRP = (1u << 7),
-  VOID = (1u << 8)
+  INT ,
+  FLT ,
+  DBL ,
+  CHR ,
+  INTP,
+  FLTP,
+  DBLP,
+  CHRP,
+  VOID
 };
 
 // STRUCTS //-------------------------------------------------------------------
@@ -45,7 +45,7 @@ void print_var_name(databuf db, char*);
 #define print_var(databuf, id) _Generic ((id), \
 int: print_var_id, char*: print_var_name)(databuf, id)
 
-databuf create_databuf();
+databuf new_databuf();
 void free_databuf(databuf*);
 
 // ADD TO BUFFER
@@ -166,10 +166,11 @@ int free_var_name(databuf*, char*);
 #define free_var(databuf, id) _Generic ((id), \
 int: free_var_id, char*: free_var_name)(databuf, id)
 
-
-#include <stdlib.h>
+#endif
+/* beginning implementation code */#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "databuf.h"
 
 // printing functions //--------------------------------------------------------
 void print_type(int type) {
@@ -285,7 +286,7 @@ void printv_databuf(databuf db) {
 }
 
 // create a databuffer without junk values
-databuf create_databuf() {
+databuf new_databuf() {
   databuf db = {NULL, 0};
   return db;
 }
@@ -710,7 +711,6 @@ int free_var_id(databuf* buf, int id) {
   for (int i = 0; i < buf->n; i++) {
     if (buf->d[i].id == id) {
       found = 1;
-      free(buf->d[i].ptr);
     }
     if (found && i < buf->n-1) {
       buf->d[i] = buf->d[i+1];
@@ -729,7 +729,6 @@ int free_var_name(databuf* buf, char* name) {
   for (int i = 0; i < buf->n; i++) {
     if (!strcmp(buf->d[i].name, name)) {
       found = 1;
-      free(buf->d[i].ptr);
     }
     if (found && i < buf->n-1) {
       buf->d[i] = buf->d[i+1];
@@ -742,4 +741,18 @@ int free_var_name(databuf* buf, char* name) {
   }
   return 1;
 }
+
+void test() {
+  databuf d = new_databuf();
+  new_var(&d, "x", 1);
+  new_var(&d, "y", 2);
+  /* do stuff */
+  int x, y;
+  get_var(d, "x", &x);
+  get_var(d, "y", &y);
+  new_var(&d, "z", x + y);
+  print_databuf(d);
+  free_databuf(&d);
+}
+
 #endif

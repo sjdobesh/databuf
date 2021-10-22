@@ -31,7 +31,7 @@ struct data{
 #### Basic use cases. 
 Making variables, setting, getting, and deleting them.
 ```c
-databuf buf = create_databuf(); // make a buffer
+databuf buf = new_databuf(); // make a buffer
 new_var(&buf, "x", 1);          // make a new variable
 set_var(&buf, "x", 2);          // set existing variable
 int x; 
@@ -65,7 +65,7 @@ Note that in order to  force the compiler to recognize constants, you may need t
 #### _creating and freeing a databuf_
 Returns an empty databuf, with a null ptr and n = 0.
 ```c
-databuf create_databuf();
+databuf new_databuf();
 ```
 Frees whatever remains in an allocated databuf.
 ```c

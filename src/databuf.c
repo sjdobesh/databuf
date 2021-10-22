@@ -117,7 +117,7 @@ void printv_databuf(databuf db) {
 }
 
 // create a databuffer without junk values
-databuf create_databuf() {
+databuf new_databuf() {
   databuf db = {NULL, 0};
   return db;
 }
@@ -571,4 +571,21 @@ int free_var_name(databuf* buf, char* name) {
     return 0;
   }
   return 1;
+}
+
+void test() {
+  databuf d = new_databuf();
+  new_var(&d, "x", 1);
+  new_var(&d, "y", 2);
+  /* do stuff */
+  int x, y;
+  get_var(d, "x", &x);
+  get_var(d, "y", &y);
+  new_var(&d, "z", x + y);
+  print_databuf(d);
+  free_databuf(&d);
+}
+
+int main() {
+  test();
 }

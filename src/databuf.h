@@ -6,15 +6,15 @@
 // ENUMS //---------------------------------------------------------------------
 
 enum db_type {
-  INT  = (1u << 0),
-  FLT  = (1u << 1),
-  DBL  = (1u << 2),
-  CHR  = (1u << 3),
-  INTP = (1u << 4),
-  FLTP = (1u << 5),
-  DBLP = (1u << 6),
-  CHRP = (1u << 7),
-  VOID = (1u << 8)
+  INT ,
+  FLT ,
+  DBL ,
+  CHR ,
+  INTP,
+  FLTP,
+  DBLP,
+  CHRP,
+  VOID
 };
 
 // STRUCTS //-------------------------------------------------------------------
@@ -45,7 +45,7 @@ void print_var_name(databuf db, char*);
 #define print_var(databuf, id) _Generic ((id), \
 int: print_var_id, char*: print_var_name)(databuf, id)
 
-databuf create_databuf();
+databuf new_databuf();
 void free_databuf(databuf*);
 
 // ADD TO BUFFER

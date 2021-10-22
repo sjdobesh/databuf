@@ -32,8 +32,7 @@ Most functions are implemented with generic macros and accept multiple types.
 `name` can by either an int for the ID or a char ptr for the name.
 `value` can be an int, float, double, char, or any corresponding ptr types. 
 `prim_ptr` can be any type of primative ptr, or a ptr to a ptr.
-Note that in order to 
-force the compiler to recognize constants, you may need to cast and explicitly show type (eg. `(char)'a'`).
+Note that in order to  force the compiler to recognize constants, you may need to cast and explicitly show type (eg. `(char)'a'`).
 
 #### _creating and freeing a databuf_
 Returns an empty databuf, with a null ptr and n = 0.
@@ -84,7 +83,8 @@ printv_databuf(buf);
 ```
 
 ### **usage**
-Basic use cases. Making variables, setting, getting, and deleting them.
+#### Basic use cases. 
+Making variables, setting, getting, and deleting them.
 ```c
 databuf buf = create_databuf(); // make a buffer
 new_var(&buf, "x", 1);          // make a new variable
@@ -97,6 +97,7 @@ free_var(&buf, "x");            // free variable from the buffer
 free_databuf(&buf);             // frees the entire databuffer
 ```
 #### **type generic arguments**
+`new_var()`, `free_var()`, `set_var()`, `get_var()`, and `print_var()` are all type generic. The value may be any type and the name can be either the user given string name or the id number returned from `new_var()`. With some constant inputs, you may need to cast in order for it to be the type you expect. For example, `'a'` is an int, `(char)'a'` is a char and `3.14` is a double, `3.14f` is a float.
 ```c
 new_var(&buf, "x", 1);         // int
 new_var(&buf, "y", 3.14f);     // float

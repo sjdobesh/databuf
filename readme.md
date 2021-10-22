@@ -27,6 +27,34 @@ struct data{
 }; 
 ```
 
+### **usage**
+#### Basic use cases. 
+Making variables, setting, getting, and deleting them.
+```c
+databuf buf = create_databuf(); // make a buffer
+new_var(&buf, "x", 1);          // make a new variable
+set_var(&buf, "x", 2);          // set existing variable
+int x; 
+get_var(buf, "x", &x);          // get a value into a local variable
+print_var(buf, "x");            // prints associated value
+free_var(&buf, "x");            // free variable from the buffer
+[or]
+free_databuf(&buf);             // frees the entire databuffer
+```
+#### **type generic arguments**
+`new_var()`, `free_var()`, `set_var()`, `get_var()`, and `print_var()` are all type generic. The value may be any type and the name can be either the user given string name or the id number returned from `new_var()`. With some constant inputs, you may need to cast in order for it to be the type you expect. For example, `'a'` is an int, `(char)'a'` is a char and `3.14` is a double, `3.14f` is a float.
+```c
+new_var(&buf, "x", 1);         // int
+new_var(&buf, "y", 3.14f);     // float
+new_var(&buf, "z", 6.28);      // double
+new_var(&buf, "w", (char)'a'); // char
+new_var(&buf, "s", "hi");      // char*
+new_var(&buf, "p", (int*)&x);  // int*
+int id = new_var(&buf, "a", 1);
+int a;
+get_var(buf, id, &a); // we can search by name or by unique id
+```
+
 ### **functions**
 Most functions are implemented with generic macros and accept multiple types.
 `name` can by either an int for the ID or a char ptr for the name.
@@ -80,32 +108,4 @@ print_databuf(buf);
 Print verbose, includes all information of each data struct in the buffer
 ```c
 printv_databuf(buf);  
-```
-
-### **usage**
-#### Basic use cases. 
-Making variables, setting, getting, and deleting them.
-```c
-databuf buf = create_databuf(); // make a buffer
-new_var(&buf, "x", 1);          // make a new variable
-set_var(&buf, "x", 2);          // set existing variable
-int x; 
-get_var(buf, "x", &x);          // get a value into a local variable
-print_var(buf, "x");            // prints associated value
-free_var(&buf, "x");            // free variable from the buffer
-[or]
-free_databuf(&buf);             // frees the entire databuffer
-```
-#### **type generic arguments**
-`new_var()`, `free_var()`, `set_var()`, `get_var()`, and `print_var()` are all type generic. The value may be any type and the name can be either the user given string name or the id number returned from `new_var()`. With some constant inputs, you may need to cast in order for it to be the type you expect. For example, `'a'` is an int, `(char)'a'` is a char and `3.14` is a double, `3.14f` is a float.
-```c
-new_var(&buf, "x", 1);         // int
-new_var(&buf, "y", 3.14f);     // float
-new_var(&buf, "z", 6.28);      // double
-new_var(&buf, "w", (char)'a'); // char
-new_var(&buf, "s", "hi");      // char*
-new_var(&buf, "p", (int*)&x);  // int*
-int id = new_var(&buf, "a", 1);
-int a;
-get_var(buf, id, &a); // we can search by name or by unique id
 ```

@@ -166,8 +166,11 @@ int free_var_name(databuf*, char*);
 #define free_var(databuf, id) _Generic ((id), \
 int: free_var_id, char*: free_var_name)(databuf, id)
 
-#endif
-/* beginning implementation code */#include <stdlib.h>
+
+
+/* beginning implementation code */
+
+#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "databuf.h"

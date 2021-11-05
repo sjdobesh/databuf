@@ -14,21 +14,21 @@ A databuf is a collection of data structs, each wrapping a primative and contain
 struct databuf {
   data* d;
   int n;
-  int next_id;
+  uint next_id;
 };
 ```
 ```c
 struct data{
   void* ptr;
-  unsigned int type;
-  unsigned int size;
+  uint type;
+  uint size;
   char* name;
-  int id;
+  uint id;
 }; 
 ```
 
 ### **usage**
-#### Basic use cases. 
+#### _basic use cases_
 Making variables, setting, getting, and deleting them.
 ```c
 databuf buf = new_databuf(); // make a buffer
@@ -41,7 +41,7 @@ free_var(&buf, "x");            // free variable from the buffer
 [or]
 free_databuf(&buf);             // frees the entire databuffer
 ```
-#### **type generic arguments**
+#### _type generic arguments_
 `new_var()`, `free_var()`, `set_var()`, `get_var()`, and `print_var()` are all type generic. The value may be any type and the name can be either the user given string name or the id number returned from `new_var()`. With some constant inputs, you may need to cast in order for it to be the type you expect. For example, `'a'` is an int, `(char)'a'` is a char and `3.14` is a double, `3.14f` is a float.
 ```c
 new_var(&buf, "x", 1);         // int
@@ -57,7 +57,7 @@ get_var(buf, id, &a); // we can search by name or by unique id
 
 ### **functions**
 Most functions are implemented with generic macros and accept multiple types.
-`name` can by either an int for the ID or a char ptr for the name.
+`name` can by either an unsigned int for the ID or a char ptr for the name.
 `value` can be an int, float, double, char, or any corresponding ptr types. 
 `prim_ptr` can be any type of primative ptr, or a ptr to a ptr.
 Note that in order to  force the compiler to recognize constants, you may need to cast and explicitly show type (eg. `(char)'a'`).

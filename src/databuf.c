@@ -35,7 +35,7 @@ void print_type(int type) {
       break;
   }
 }
-void print_var_id(databuf db, int id) {
+void print_var_id(databuf db, uint id) {
   data d;
   if (!get_data(&db, id, &d)) {
     switch (d.type) {
@@ -537,7 +537,7 @@ int set_chrp_name(databuf* buf, char* name, char* var){
   return 1;
 }
 
-int free_var_id(databuf* buf, int id) {
+int free_var_id(databuf* buf, uint id) {
   int found = 0;
   for (int i = 0; i < buf->n; i++) {
     if (buf->d[i].id == id) {

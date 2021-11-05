@@ -3,6 +3,8 @@
 
 #include <stdlib.h>
 
+#define uint unsigned int
+
 // ENUMS //---------------------------------------------------------------------
 
 enum db_type {
@@ -21,16 +23,16 @@ enum db_type {
 
 typedef struct data {
   void* ptr;
-  unsigned int type;
-  unsigned int size;
+  uint type;
+  uint size;
   char* name;
-  int id;
+  uint id;
 } data;
 
 typedef struct databuf {
   data* d;
-  int n;
-  int next_id;
+  uint n;
+  uint next_id;
 } databuf;
 
 int get_next_id(databuf*);
@@ -40,10 +42,10 @@ int get_last_id(databuf);
 void print_type(int type);
 void print_databuf(databuf db);
 void printv_databuf(databuf db);
-void print_var_id(databuf db, int);
+void print_var_id(databuf db, uint);
 void print_var_name(databuf db, char*);
 #define print_var(databuf, id) _Generic ((id), \
-int: print_var_id, char*: print_var_name)(databuf, id)
+int: print_var_id, uint: print_var_id, char*: print_var_name)(databuf, id)
 
 databuf new_databuf();
 void free_databuf(databuf*);
@@ -86,7 +88,7 @@ double: new_dbl, double*: new_dblp\
 int get_data_id(databuf*, int, data*);
 int get_data_name(databuf*, char*, data*);
 #define get_data(databuf, id, data) _Generic ((id), \
-int: get_data_id, char*: get_data_name)(databuf, id, data)
+int: get_data_id, uint: get_data_id, char*: get_data_name)(databuf, id, data)
 
 // int
 int get_int_id   (databuf, int,   int*);
@@ -122,7 +124,7 @@ float*:  get_flt_name, float**:  get_fltp_name,\
 double*: get_dbl_name, double**: get_dblp_name\
 )
 #define get_var(databuf, id, var) _Generic ((id), \
-int: get_var_id(var), char*: get_var_name(var))(databuf, id, var)
+int: get_var_id(var), uint: get_var_id(var), char*: get_var_name(var))(databuf, id, var)
 
 // UPDATE VARIABLES
 int set_int_id   (databuf*, int,   int);
@@ -158,12 +160,12 @@ float:  set_flt_name, float*:  set_fltp_name,\
 double: set_dbl_name, double*: set_dblp_name\
 )
 #define set_var(databuf, id, var) _Generic ((id), \
-int: set_var_id(var), char*: set_var_name(var))(databuf, id, var)
+int: set_var_id(var), uint: set_var_id(var), char*: set_var_name(var))(databuf, id, var)
 
 // FREE DATA
-int free_var_id(databuf*, int);
+int free_var_id(databuf*, uint);
 int free_var_name(databuf*, char*);
 #define free_var(databuf, id) _Generic ((id), \
-int: free_var_id, char*: free_var_name)(databuf, id)
+int: free_var_id, uint: free_var_id, char*: free_var_name)(databuf, id)
 
 #endif

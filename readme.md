@@ -1,13 +1,13 @@
 # **Databuf**
 Header only library implementing a dynamic data buffer in C.
 
-### **quick start**
+### **Quick start**
 Place `databuf.h` in your project folder or include folder.
 ```c
 #include "databuf.h"
 ```
 
-### **structure**
+### **Structure**
 A databuf is a collection of data structs, each wrapping a primative and containing relevant meta information.
 
 ```c
@@ -27,8 +27,8 @@ struct data{
 }; 
 ```
 
-### **usage**
-#### _basic use cases_
+### **Usage**
+#### _Basic use cases_
 Making variables, setting, getting, and deleting them.
 ```c
 databuf buf = new_databuf(); // make a buffer
@@ -41,7 +41,7 @@ free_var(&buf, "x");            // free variable from the buffer
 [or]
 free_databuf(&buf);             // frees the entire databuffer
 ```
-#### _type generic arguments_
+#### _Type generic arguments_
 `new_var()`, `free_var()`, `set_var()`, `get_var()`, and `print_var()` are all type generic. The value may be any type and the name can be either the user given string name or the id number returned from `new_var()`. With some constant inputs, you may need to cast in order for it to be the type you expect. For example, `'a'` is an int, `(char)'a'` is a char and `3.14` is a double, `3.14f` is a float.
 ```c
 new_var(&buf, "x", 1);         // int
@@ -55,14 +55,14 @@ int a;
 get_var(buf, id, &a); // we can search by name or by unique id
 ```
 
-### **functions**
+### **Functions**
 Most functions are implemented with generic macros and accept multiple types.
 `name` can by either an unsigned int for the ID or a char ptr for the name.
 `value` can be an int, float, double, char, or any corresponding ptr types. 
 `prim_ptr` can be any type of primative ptr, or a ptr to a ptr.
 Note that in order to  force the compiler to recognize constants, you may need to cast and explicitly show type (eg. `(char)'a'`).
 
-#### _creating and freeing a databuf_
+#### _Creating and freeing a databuf_
 Returns an empty databuf, with a null ptr and n = 0.
 ```c
 databuf new_databuf();
@@ -72,31 +72,31 @@ Frees whatever remains in an allocated databuf.
 void free_databuf(databuf*)
 ```
 
-#### _creating a new variable_
+#### _Creating a new variable_
 Returns the ID of the newly created data struct.
 ```c
 int new_var(databuf*, name, value);
 ```
 
-#### _setting an exisiting variable_
+#### _Setting an exisiting variable_
 Returns an exit code, 0 if it found the variable and set the ptr, 1 if it did not.
 ```c
 int set_var(databuf*, name, value);
 ```
 
-#### _getting a variable_
+#### _Getting a variable_
 Returns an exit code, 0 if it found the variable and set the ptr, 1 if it did not.
 ```c
 int get_var(databuf, name, prim_ptr)
 ```
 
-#### _freeing variables_
+#### _Freeing variables_
 Returns an exit code, 0 if it found and removed the variable, 1 if it did not.
 ```c
 free_var(databuf*, name);
 ```
 
-#### _printing variables_
+#### _Printing variables_
 Print the value of a data struct.
 ```c
 print_var(buf, name); 
